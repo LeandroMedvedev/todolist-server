@@ -7,7 +7,9 @@
   "author": "Leandro Medvedev <leandromedvedev@hotmail.com>",
   "private": false,
   "scripts": {
-    "start": "ts-node-dev --files --rs --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev --files --rs --ignore-watch node_modules src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "typeorm-ts-node-commonjs migration:create",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts",
