@@ -15,8 +15,9 @@ class UserRepository implements IUserRepository {
 
   get = async () => await this.ormRepository.find();
 
-  retrieve = async (payload: object) =>
-    await this.ormRepository.findOneBy({ ...payload });
+  retrieve = async (payload: object) => {
+    return await this.ormRepository.findOneBy({ ...payload });
+  };
 
   update = async (userUuid: string, payload: Partial<User>) =>
     await this.ormRepository.update(userUuid, { ...payload });
