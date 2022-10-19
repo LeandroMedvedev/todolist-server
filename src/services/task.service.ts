@@ -33,6 +33,17 @@ class TaskService {
     return { status: 200, message: task };
   };
 
+  findByDescription = async ({ decoded, query }: Request) => {
+    const { description } = query as Pick<Task, 'description'>;
+    const { tasks } = decoded;
+
+    const tasksByDescription: Task[] = tasks.filter(
+      (task) => task.description.toLowerCase() === description.toLowerCase()
+    );
+
+    return { status: 200, message: tasksByDescription };
+  };
+
   update = async ({ task, validated }: Request) => {
     const { taskUuid } = task;
     await taskRepository.update(taskUuid, { ...(validated as Task) });

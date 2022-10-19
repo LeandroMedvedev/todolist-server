@@ -10,19 +10,30 @@ class TaskRepository implements ITaskRepository {
     this.ormRepository = AppDataSource.getRepository(Task);
   }
 
-  save = async (task: Partial<Task>) => await this.ormRepository.save(task);
+  save = async (task: Partial<Task>) => {
+    return await this.ormRepository.save(task);
+  };
 
-  all = async () => await this.ormRepository.find();
+  all = async () => {
+    return await this.ormRepository.find();
+  };
 
   retrieve = async (payload: object) => {
     return await this.ormRepository.findOneBy({ ...payload });
   };
 
-  update = async (taskUuid: string, payload: Partial<Task>) =>
-    await this.ormRepository.update(taskUuid, { ...payload });
+  // ADM only
+  findByDescription = async (description: object) => {
+    return await this.ormRepository.findBy({ ...description });
+  };
 
-  delete = async (taskUuid: string) =>
-    await this.ormRepository.delete(taskUuid);
+  update = async (taskUuid: string, payload: Partial<Task>) => {
+    return await this.ormRepository.update(taskUuid, { ...payload });
+  };
+
+  delete = async (taskUuid: string) => {
+    return await this.ormRepository.delete(taskUuid);
+  };
 }
 
 export default new TaskRepository();

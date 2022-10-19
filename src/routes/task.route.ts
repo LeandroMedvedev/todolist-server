@@ -27,6 +27,12 @@ const taskRoutes = (): Router => {
   );
 
   router.get(
+    '/description',
+    validateTokenMiddleware,
+    taskController.findByDescription
+  );
+
+  router.get(
     '/adm/:taskUuid',
     getTaskByIdOr404Middleware,
     validateTokenMiddleware,
