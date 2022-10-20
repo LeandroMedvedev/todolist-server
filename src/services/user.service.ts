@@ -11,8 +11,6 @@ import { serializedUserLoginSchema } from '../schemas';
 class UserService {
   login = async ({ validated }: Request): Promise<IResponse> => {
     const { email, password } = validated as User;
-
-    console.log(process.env.EXPIRES_IN);
     
     const user: User = await userRepository.retrieve({ email });
 
