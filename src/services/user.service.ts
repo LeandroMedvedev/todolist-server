@@ -1,5 +1,4 @@
-import { config } from 'dotenv';
-import { hash } from 'bcrypt';
+import 'dotenv/config';
 import { Request } from 'express';
 import { sign } from 'jsonwebtoken';
 
@@ -9,18 +8,20 @@ import { userRepository } from '../repositories';
 import { User } from '../entities';
 import { serializedUserLoginSchema } from '../schemas';
 
-config();
 class UserService {
   login = async ({ validated }: Request): Promise<IResponse> => {
     const { email, password } = validated as User;
+
+    console.log(process.env.EXPIRES_IN);
+    
     const user: User = await userRepository.retrieve({ email });
 
     if (!user) {
       return { status: 401, message: { message: 'invalid credentials' } };
-    }   
-    
+    }
+
     const passwordMatch: boolean = await user.comparePassword(password);
-    
+
     if (!passwordMatch) {
       return { status: 401, message: { message: 'invalid credentials' } };
     }
@@ -37,7 +38,6 @@ class UserService {
   };
 
   create = async ({ validated }: Request): Promise<IResponse> => {
-    (validated as User).password = await hash((validated as User).password, 10);
     const user: User = await userRepository.save({ ...(validated as User) });
 
     const serialized: Partial<User> = await serializedUserSchema.validate(
