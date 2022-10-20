@@ -1,6 +1,7 @@
 import createUserSchema from './users/createUser.schema';
 import loginUserSchema from './users/loginUser.schema';
 import serializedUserSchema from './users/serializedUser.schema';
+import serializedUserLoginSchema from './users/serializedUserLogin.schema';
 import updateUserSchema from './users/updateUser.schema';
 
 import createTaskSchema from './tasks/createTask.schema';
@@ -13,6 +14,7 @@ export {
   loginUserSchema,
   serializedTaskSchema,
   serializedUserSchema,
+  serializedUserLoginSchema,
   updatedTaskSchema,
   updateUserSchema,
 };

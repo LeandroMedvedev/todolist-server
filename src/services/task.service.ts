@@ -9,14 +9,18 @@ class TaskService {
   createTask = async ({ validated, decoded }: Request): Promise<IResponse> => {
     const { userUuid } = decoded;
     const user: User = await userRepository.retrieve({ userUuid });
-    // develop logic check if user still exists in database
+
     const task: Task = await taskRepository.save({ ...(validated as Task) });
+    task.userUuid = user.userUuid;
+    await taskRepository.save(task);
 
     user.tasks = [...user.tasks, task];
 
     await userRepository.save(user);
 
-    const serialized: Task = await serializedTaskSchema.validate(task);
+    const serialized: Task = await serializedTaskSchema.validate(task, {
+      stripUnknown: true,
+    });
 
     return { status: 201, message: serialized };
   };
@@ -31,6 +35,17 @@ class TaskService {
     const task: Task = await taskRepository.retrieve({ taskUuid });
 
     return { status: 200, message: task };
+  };
+
+  listOwn = async ({ decoded }: Request) => {
+    const { tasks } = decoded;
+    const serialized = await Promise.all(
+      tasks.map(
+        async (task: Task) =>
+          await serializedTaskSchema.validate(task, { stripUnknown: true })
+      )
+    );
+    return { status: 200, message: serialized };
   };
 
   findByDescription = async ({ decoded, query }: Request) => {

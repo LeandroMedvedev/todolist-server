@@ -18,4 +18,7 @@ export class Task {
 
   @Column({ default: false })
   completed?: boolean;
+
+  @Column('uuid', { nullable: true })
+  userUuid?: string;
 }

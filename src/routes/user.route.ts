@@ -23,7 +23,7 @@ const userRoutes = (): Router => {
   router.get(
     '',
     validateTokenMiddleware,
-    // isAdminOrOwnerMiddleware,
+    isAdminOrOwnerMiddleware,
     userController.list
   );
 

@@ -18,13 +18,13 @@ class TaskController {
   };
 
   findByDescription = async (request: Request, response: Response) => {
-    const {status, message} = await taskService.findByDescription(request);
+    const { status, message } = await taskService.findByDescription(request);
     return response.status(status).json(message);
-  }
+  };
 
   listOwn = async (request: Request, response: Response) => {
-    const { tasks } = request.decoded;
-    return response.status(200).json(tasks);
+    const { status, message } = await taskService.listOwn(request);
+    return response.status(status).json(message);
   };
 
   update = async (request: Request, response: Response) => {

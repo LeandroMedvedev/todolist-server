@@ -1,14 +1,15 @@
+import { config } from 'dotenv';
 import { hash } from 'bcrypt';
 import { Request } from 'express';
 import { sign } from 'jsonwebtoken';
-import 'dotenv/config';
 
 import { IResponse } from '../interfaces';
 import { serializedUserSchema } from '../schemas';
 import { userRepository } from '../repositories';
 import { User } from '../entities';
-import serializedUserLoginSchema from '../schemas/users/serializedUserLogin.schema';
+import { serializedUserLoginSchema } from '../schemas';
 
+config();
 class UserService {
   login = async ({ validated }: Request): Promise<IResponse> => {
     const { email, password } = validated as User;
@@ -16,10 +17,10 @@ class UserService {
 
     if (!user) {
       return { status: 401, message: { message: 'invalid credentials' } };
-    }
-
+    }   
+    
     const passwordMatch: boolean = await user.comparePassword(password);
-
+    
     if (!passwordMatch) {
       return { status: 401, message: { message: 'invalid credentials' } };
     }
