@@ -4,6 +4,7 @@ import { taskController } from '../controllers';
 import {
   getTaskByIdOr404Middleware,
   isAdminOrOwnerMiddleware,
+  isAdminOrTaskOwnerMiddleware,
   validateSchemaMiddleware,
   validateTokenMiddleware,
 } from '../middlewares';
@@ -46,7 +47,7 @@ const taskRoutes = (): Router => {
     '/:taskUuid',
     getTaskByIdOr404Middleware,
     validateTokenMiddleware,
-    isAdminOrOwnerMiddleware,
+    isAdminOrTaskOwnerMiddleware,
     validateSchemaMiddleware(updatedTaskSchema),
     taskController.update
   );
@@ -55,7 +56,7 @@ const taskRoutes = (): Router => {
     '/:taskUuid',
     getTaskByIdOr404Middleware,
     validateTokenMiddleware,
-    isAdminOrOwnerMiddleware,
+    isAdminOrTaskOwnerMiddleware,
     taskController.delete
   );
 
