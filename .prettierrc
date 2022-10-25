@@ -1,19 +1,18 @@
 {
-    "singleQuote": true,
-    "semi": true,
-    "tabWidth": 2,
-    "importOrder": [
-      "^@(assets|components|context|hooks|lib|pages|routes|services|styles|ui|utils)/?(.*)$",
-      "^[./]"
-    ],
-    "importOrderSeparation": true,
-    "importOrderParserPlugins": [
-      "jsx",
-      "typescript",
-      "importOrderParserPlugins",
-      "classProperties",
-      "decorators-legacy"
-    ],
-    "endOfLine": "auto"
-  }
-  
+  "singleQuote": true,
+  "semi": true,
+  "tabWidth": 2,
+  "importOrder": [
+    "^@(assets|components|context|hooks|lib|pages|routes|services|styles|ui|utils)/?(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderParserPlugins": [
+    "jsx",
+    "typescript",
+    "importOrderParserPlugins",
+    "classProperties",
+    "decorators-legacy"
+  ],
+  "endOfLine": "auto"
+}

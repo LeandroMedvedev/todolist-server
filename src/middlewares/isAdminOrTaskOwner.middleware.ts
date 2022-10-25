@@ -13,7 +13,7 @@ const isAdminOrTaskOwnerMiddleware = (
   if (isAdmin) {
     return next();
   }
-  
+
   if (userUuid !== task.userUuid) {
     throw new ErrorHandler(403, 'missing admin permissions');
   }
