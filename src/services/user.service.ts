@@ -7,6 +7,7 @@ import { serializedUserSchema } from '../schemas';
 import { userRepository } from '../repositories';
 import { User } from '../entities';
 import { serializedUserLoginSchema } from '../schemas';
+import { IUserResponse } from '../interfaces/response.interface';
 
 class UserService {
   login = async ({ validated }: Request): Promise<IResponse> => {
@@ -35,7 +36,7 @@ class UserService {
     return { status: 200, message: { token, user: serialized } };
   };
 
-  create = async ({ validated }: Request): Promise<IResponse> => {
+  create = async ({ validated }: Request): Promise<IUserResponse> => {
     const user: User = await userRepository.save({ ...(validated as User) });
 
     const serialized: Partial<User> = await serializedUserSchema.validate(

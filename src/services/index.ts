@@ -1,4 +1,5 @@
 import taskService from './task.service';
 import userService from './user.service';
+import mailerService from './mailer.service';
 
-export { taskService, userService };
+export { mailerService, taskService, userService };
