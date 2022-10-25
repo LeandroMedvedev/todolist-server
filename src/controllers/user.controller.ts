@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { userService } from '../services';
 
 class UserController {
-  login = async (request: Request, response: Response) => {   
+  login = async (request: Request, response: Response) => {
     const { status, message } = await userService.login(request);
     return response.status(status).json(message);
   };

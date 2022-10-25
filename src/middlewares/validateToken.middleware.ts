@@ -4,7 +4,7 @@ import { JwtPayload, verify, VerifyErrors } from 'jsonwebtoken';
 import { ErrorHandler } from '../errors';
 import { User } from '../entities';
 
-const validateTokenMiddleware = async (
+const validateTokenMiddleware = (
   request: Request,
   _: Response,
   next: NextFunction
