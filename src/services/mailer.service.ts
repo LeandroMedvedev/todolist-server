@@ -7,7 +7,7 @@ class MailerService {
     const mailOptions = {
       from: 'leandromedvedev@hotmail.com',
       to: userEmail,
-      subject: "Confirmação de cadastro",
+      subject: 'Confirmação de cadastro',
       text: `
       Bem-vindo ao To-Do List!
       Sua lista de tarefas em um único lugar,
