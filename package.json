@@ -15,7 +15,7 @@
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "test": "cross-env NODE_ENV=test SECRET_KEY=L/Z1EEo/7aY= jest"
+    "test": "cross-env NODE_ENV=test SECRET_KEY=L/Z1EEo/7aY= EXPIRES_IN=1h jest"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
