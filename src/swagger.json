@@ -1,0 +1,588 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "API de cadastro e manipulação de tarefas para melhor organização da rotina do usuário",
+    "version": "1.0.0",
+    "title": "To-Do List API",
+    "contact": {
+      "email": "leandromedvedev@proton.me"
+    },
+    "license": {
+      "name": "Mozilla Public License Version 2.0",
+      "url": "http://mozilla.org/MPL/2.0/"
+    }
+  },
+  "basePath": "/api",
+  "servers": [
+    {
+      "url": "http://localhost:3333/api",
+      "description": "Api de teste"
+    },
+    {
+      "url": "https://kenzie-todolist.herokuapp.com/api",
+      "description": "Api de produção"
+    }
+  ],
+  "paths": {
+    "/users/signup": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Criação de usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Desmond Hume",
+                    "email": "humedesmond@lost.com",
+                    "password": "xX%$@"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "email already exists"
+          },
+          "400": {
+            "description": "name/email/password is a required field"
+          }
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login de usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/UserLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "email/password is a required field"
+          },
+          "401": {
+            "description": "invalid credentials"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Listagem de usuário(s)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          }
+        }
+      }
+    },
+    "/users/{userUuid}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Busca de um usuário por uuid",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "description": "Busca de um usuário por uuid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token / jwt malformed"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Atualização de usuário por uuid",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "description": "Atualização de usuário por uuid",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatedUser"
+              }
+            }
+          }
+        },
+        "examples": {
+          "user": {
+            "value": {
+              "name": "Boone Carlyle"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          },
+          "404": {
+            "description": "user not found"
+          },
+          "409": {
+            "description": "email already exists"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Deleção de usuário por uuid",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userUuid",
+            "in": "path",
+            "description": "Deleção de usuário por uuid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "missing authorization token / invalid token / jwt malformed"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "post": {
+        "tags": ["Task"],
+        "summary": "Criação de tarefa",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "description": "Watch the series Dawson's Creek"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "description is a required field"
+          },
+          "401": {
+            "description": "missing authorization token / invalid token"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Task"],
+        "summary": "Listagem de tarefas",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token / jwt malformed"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          }
+        }
+      }
+    },
+    "/tasks/description": {
+      "get": {
+        "tags": ["Task"],
+        "summary": "Listagem de tarefa(s) por descrição",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Descrição exata da tarefa para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token / jwt malformed"
+          }
+        }
+      }
+    },
+    "/tasks/adm/{taskUuid}": {
+      "get": {
+        "tags": ["Task"],
+        "summary": "Busca de uma tarefa por uuid",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "taskUuid",
+            "in": "path",
+            "description": "Busca de uma tarefa por uuid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token / jwt malformed"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          },
+          "404": {
+            "description": "task not found"
+          }
+        }
+      }
+    },
+    "/tasks/own": {
+      "get": {
+        "tags": ["Task"],
+        "summary": "Busca de tarefa(s) criada(s) pelo usuário",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token"
+          }
+        }
+      }
+    },
+    "/tasks/{taskUuid}": {
+      "patch": {
+        "tags": ["Task"],
+        "summary": "Atualização de tarefa por uuid",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "taskUuid",
+            "in": "path",
+            "description": "Atualização de tarefa por uuid",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatedTask"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "description": "Watch the series Lost"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "missing authorization token / invalid token"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          },
+          "404": {
+            "description": "task not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Task"],
+        "summary": "Deleção de uma tarefa por uuid",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "taskUuid",
+            "in": "path",
+            "description": "Deleção de usuário por uuid",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "missing authorization token / invalid token / jwt malformed"
+          },
+          "403": {
+            "description": "missing admin permissions"
+          },
+          "404": {
+            "description": "task not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "userUuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name": {
+            "type": "string",
+            "example": "Juliet Burke"
+          },
+          "email": {
+            "type": "string",
+            "example": "burkejuliet@lost.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "lost2004"
+          },
+          "isAdmin": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "UserLogin": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "burkejuliet@lost.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "wW*8uuu"
+          }
+        }
+      },
+      "UpdatedUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Claire Littleton"
+          }
+        }
+      },
+      "Task": {
+        "type": "object",
+        "required": ["description"],
+        "properties": {
+          "taskUuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "description": {
+            "type": "string",
+            "example": "Watch the series Dawson's Creek"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "completed": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "UpdatedTask": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Listen to Radiohead, The Verve, U2, Oasis"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
