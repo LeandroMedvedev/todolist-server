@@ -17,7 +17,7 @@ app.use(
   swaggerUiExpress.serve,
   swaggerUiExpress.setup(swaggerDocument)
 );
-
+ 
 app.use((error: Error, _: Request, response: Response, __: NextFunction) => {
   return errorHandler(error, response);
 });
