@@ -11,7 +11,7 @@ interface IUserCreate {
 
 export const userDataOne: IUserCreate = {
   name: 'Leandro Medvedev',
-  email: 'leandromedvedev@lost.com',
+  email: 'leandromedvedev@hotmail.com',
   password: '-)lost(-',
 };
 
