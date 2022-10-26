@@ -10,14 +10,14 @@ interface IUserCreate {
 }
 
 export const userDataOne: IUserCreate = {
-  name: 'Juliet Burke',
-  email: 'burkejuliet@lost.com',
+  name: 'Leandro Medvedev',
+  email: 'leandromedvedev@lost.com',
   password: '-)lost(-',
 };
 
 export const userDataTwo: IUserCreate = {
-  name: 'Claire Littleton',
-  email: 'littletonclaire@lost.com',
+  name: 'Leandro Medvedev',
+  email: 'leandromedvedev@proton.me',
   password: '-)lost(-',
 };
 
