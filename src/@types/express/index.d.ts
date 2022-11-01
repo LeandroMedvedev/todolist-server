@@ -1,4 +1,4 @@
-import { Task, User } from '../entities';
+import { Task, User } from '../../entities';
 
 declare global {
   namespace Express {
