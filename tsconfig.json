@@ -10,6 +10,15 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "typeRoots": ["src/@types", "node_modules/@types"]
+    "typeRoots": ["src/@types", "node_modules/@types"],
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
+
+// https://www.typescriptlang.org/pt/tsconfig

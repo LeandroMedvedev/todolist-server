@@ -6,8 +6,12 @@ import { join } from 'path';
 const DevAppDataSource = new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  logging: false,
-  ssl: { rejectUnauthorized: false },
+  synchronize: false,
+  logging: true,
+  ssl:
+    process.env.NODE_ENV === 'production'
+      ? { rejectUnauthorized: false }
+      : false,
   entities: [join(__dirname, './entities/**/*.{ts,js}')],
   migrations: [join(__dirname, './migrations/**/*.{ts,js}')],
 });
