@@ -25,13 +25,9 @@ class UserService {
       return { status: 401, message: { message: 'invalid credentials' } };
     }
 
-    const token: string = sign(
-      { email: user.email, userUuid: user.userUuid, isAdmin: user.isAdmin },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: process.env.EXPIRES_IN,
-      }
-    );
+    const token: string = sign({ ...user }, process.env.SECRET_KEY, {
+      expiresIn: process.env.EXPIRES_IN,
+    });
 
     const serialized = await serializedUserLoginSchema.validate(user, {
       stripUnknown: true,
