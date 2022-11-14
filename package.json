@@ -7,9 +7,6 @@
   "author": "Leandro Medvedev <leandromedvedev@hotmail.com>",
   "private": false,
   "license": "MPL-2.0",
-  "engines": {
-    "node": "18.x"
-  },
   "scripts": {
     "dev": "ts-node-dev --files --rs --ignore-watch node_modules src/server.ts",
     "start": "node dist/server.js",
