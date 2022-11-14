@@ -8,14 +8,14 @@ import swaggerDocument from './swagger.json';
 import appRoutes from './routes';
 
 const app = express();
-app.use(
-  cors({
-    origin: 'https://client-9kpu13vjo-leandromedvedev.vercel.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'https://client-9kpu13vjo-leandromedvedev.vercel.app',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     preflightContinue: false,
+//     optionsSuccessStatus: 204,
+//   })
+// );
 app.use(express.json());
 appRoutes(app);
 
