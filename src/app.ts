@@ -10,7 +10,7 @@ import appRoutes from './routes';
 const app = express();
 app.use(
   cors({
-    origin: '*',
+    origin: 'https://kenzie-todolist.herokuapp.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
