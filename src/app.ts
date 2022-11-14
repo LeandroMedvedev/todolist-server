@@ -8,8 +8,8 @@ import swaggerDocument from './swagger.json';
 import appRoutes from './routes';
 
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 appRoutes(app);
 
 app.use(
