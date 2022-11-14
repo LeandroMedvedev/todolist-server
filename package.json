@@ -6,6 +6,7 @@
   "repository": "git@github.com:LeandroMedvedev/to-do-list.git",
   "author": "Leandro Medvedev <leandromedvedev@hotmail.com>",
   "private": false,
+  "proxy": "http://localhost:3333",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "ts-node-dev --files --rs --ignore-watch node_modules src/server.ts",

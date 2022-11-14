@@ -12,11 +12,11 @@
     "resolveJsonModule": true,
     "typeRoots": ["src/@types", "node_modules/@types"],
     "skipLibCheck": true,
-    "alwaysStrict": true,
+    // "alwaysStrict": true,
     // "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "forceConsistentCasingInFileNames": true
+    // "noImplicitThis": true,
+    // "strictBindCallApply": true,
+    // "strictFunctionTypes": true,
+    // "forceConsistentCasingInFileNames": true
   }
 }
