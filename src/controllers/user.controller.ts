@@ -10,7 +10,7 @@ class UserController {
 
   create = async (request: Request, response: Response) => {
     const { status, message } = await userService.create(request);
-    mailerService.welcomeEmail(message.email);
+    // mailerService.welcomeEmail(message.email);
     return response.status(status).json(message);
   };
 
