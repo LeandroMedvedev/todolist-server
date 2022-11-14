@@ -10,10 +10,22 @@ import appRoutes from './routes';
 const app = express();
 app.use(
   cors({
-    origin: 'https://client-9kpu13vjo-leandromedvedev.vercel.app',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Content-Range',
+      'Content-MD5',
+      'X-Api-Version',
+      'X-Content-Range',
+      'X-CSRF-Token',
+      'X-Requested-With',
+      'Accept',
+      'Date'
+    ],
     preflightContinue: false,
-    optionsSuccessStatus: 204,
   })
 );
 app.use(express.json());
